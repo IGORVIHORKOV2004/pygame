@@ -1,1 +1,51 @@
+'''class Human:
+    #СВОЙСТВА
+age=10
+height=150
+weight=50
+
+#методы
+    def say_hello(self):
+        print("HELLO!")
+        print("I AM A HUMAN.")
+
+    def say_good_bye(self):
+        print("SEE YOU!")
+
+John=Human()
+Frank=Human()
+print(John.age)
+John.say_hello
+print(Frank.height)
+Frank.say_good_bye()
+class My_class:
+    def __init__(self,name,surname):
+        self.name=name
+        self.surname=surname
+
+
+me=My_class("Miroslav","LIGHT-FACED")
+print(me.name)'''
+class Player:
+    def __init__(self, name, wear, health,gun,power):
+        self.name = name
+        self.wear = wear
+        self.health = health
+        self.gun = gun
+        self.power= power
+    def print_info(self):
+        print("ИМЯ ИГРОКА!!!!!!!!!!!!!!:", self.name)
+        print("ОДЕЖДА ИГРОКА!!!!!!!!!!!:", self.wear)
+        print("ЗДОРОВЬЕ ИГРОКОВ!!!!!!!!!:", self.health)
+        print("ОРУЖИЕ ИГРОКОВ!!!!!!!!!!!!!:", self.gun)
+        print("СИЛА ИГРОКА!!!!!!!!!!!!!:",self.power)
+
+    def hit(self, enemy):
+        print(self.name,"атакует",enemy,"при помощи",self.gun,"с силой",self.power)
+        enemy.health-=self.power
+       print(enemy,"теряет здоровье")
+        
+
+me = Player("ИГОРЬ", "ТРУСЫ КЕЛИН КЕЛАЙН", "1000", "СВЕТ ОТ ЛИКА СВЕТЛАЛИКОГО И КОБЫЛЬЯ ЧЕШУЯ")
+me.print_info()
 
