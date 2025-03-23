@@ -1,18 +1,30 @@
 import pygame
 
-pygame.init()# обязательная команда
-window_size=(300,300)
-screen=pygame.display.set_mode(window_size)#создание экрана с размерами 300 на 300
-pygame.display.set_caption("МОЯ ИГРА!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-background_color=(0,0,255)#создание цвета
-screen.fill(background_color)# заливка зеднего фона цветом из строки 7
-clock=pygame.time.Clock()# объект- таймер
-card = pygame.Rect(100, 125, 100, 50)
-pygame.draw.rect(screen, (255, 255, 255), card)
+r = pygame.Rect(x, y)
+class Food:
+    def __init__(self,name_image):#конструктор.Создание свойств
+        self.image = pygame.image.load(name_image)# создание картинки
+        rect=self.image.get_rect()# создание прям по границам картинки
+        self.x=rect.x# координата х для картинки
+        self.y=rect.y# координата у для картинки
 
-while True: # игровой таймер бесконечный
-    clock.tick(40)# частота обновления экрана
-    pygame.display.update()# обновление содержимого экрана
-    for event in pygame.event.get(): # прохождение по событиям
-        if event.type==pygame.QUIT:#если нажать на крестик
-            pygame.QUIT()# выход из игры
+    def draw_image(self):
+        screen.blit(self.image(self.x,self.y))
+
+    def move_food(self):
+        self.y+=2
+    def move_plate(self):
+        keys = pygame.key.get_pressed()
+        if  keys[pygame.K_LEFT]:
+            self.x -= 3
+        elif keys[pygame.K_RIGHT]:
+            self.x += 3
+
+
+
+plate=Food('plate')
+def draw_image(self):
+    while True:  # игрововй таймер
+        
+        clock.tick(40)
+        plate.draw_image()
