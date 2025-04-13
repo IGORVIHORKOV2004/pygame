@@ -1,53 +1,76 @@
-import pygame as pistrun
-
-pistrun.init() #обязательная каманда people
-window_size=(300,300) #dont
-screen=pistrun.display.set_mode(window_size) #создание экрана(окна) с размера 300x300 (можно в него выйти?)
-pistrun.display.set_caption("БАСУХА В ДЕЛЕ РОДНЫЕ") #название окна
-backgound_color = (255,255,255) #цвет
-clock = pistrun.time.Clock()#создание игровово таймера
-
-pistrun.display.update()
-
-height=50
-width=50
-height=150
-x = 150
-y= 150
-r=pistrun.Rect(x,y,width,height)
+import pygame
+import random
 
 
+class Food:
+    def __init__(self, name_image, x, y, width, height):  # конструктор.Создание свойств
+        self.image = pygame.image.load(name_image)  # создание картинки
+        self.image = pygame.transform.scale(self.image, (width, height))
+        self.rect=self.image.get_rect()# создание прям по границам картинки
+        self.rect.x = x
+        self.rect.y = y
 
-while True:    #игрововй таймер
-    clock.tick(40) #частота обновления таймераааааа
-    pistrun.draw.rect(screen, (0, 0, 255), r)
-    pistrun.draw.circle(screen, (0, 255, 0), (x,y), radius=27)
-    pistrun.display.update() #обновление содержимого экрана
-    screen.fill(backgound_color)  # заполнение окна цветоm
-    for event in pistrun.event.get(): #проходимся по событиям
-        if event.type == pistrun.QUIT: #если нажали на крестик
-            pistrun.QUIT() #выйти из ГОЙДА
-        if event.type == pistrun.KEYDOWN:
-            if event.key == pistrun.K_a:
-                r.x-=10
-            elif event.key == pistrun.K_d:
-                r.x+=10
-            elif event.key == pistrun.K_w:
-                r.y-=10
-            elif event.key == pistrun.K_s:
-                r.y +=10
-        if event.type==pistrun.KEYDOWN:
-            if event.key == pistrun.K_LEFT:
-                x-=10
-            elif event.key == pistrun.K_RIGHT:
-                x += 10
-            elif event.key == pistrun.K_UP:
-                y -= 10
-            elif event.key == pistrun.K_DOWN:
-                y += 10
-    if x>=327:
-        x=-27
-        print("А В ШУМНОМ ЗАЛЕ РЕСТОРАНА!!!!!!")
+
+    def collide_food(self, f):
+        if self.rect.colliderect(f.rect) == True:
+            food_list.remove(self)
 
 
 
+
+    def draw_image(self):  # МЕТОД!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        screen.blit(self.image, (self.rect.x, self.rect.y))  # это отрисовка картинок на координатах x и y
+
+    def move_food(self):  # ПОСТОЯННОЕ ДВИЖЕНИЕ ВНИЗ
+        self.rect.y += 4
+        if self.rect.y > 720:
+            self.rect.y = 0
+    def move_plate(self,s):  # метод!!!!!!!!!!!!!!!!!!!!
+        keys = pygame.key.get_pressed()
+        if  self.rect.x >1280:
+            self.rect.x= 0
+        elif self.rect.x<-64:
+            self.rect.x=1280
+        if keys[pygame.K_LEFT]:
+            self.rect.x -= s
+        elif keys[pygame.K_RIGHT]:
+            self.rect.x += s
+
+pygame.init()  # обязательная каманда people
+window_size = (1280, 720)
+speed=8
+txt="АВОН"
+font = pygame.font.SysFont("Times New Roman",50)
+text=font.render(txt,True,(0,0,255))
+screen = pygame.display.set_mode(window_size)  # создание экрана(окна) с размера 300x300
+pygame.display.set_caption("БАСУХА В ДЕЛЕ РОДНЫЕ")  # название окна
+backgound_color = (255, 255, 255)  # цвет
+clock = pygame.time.Clock()  # создание игровово таймера
+a=1280/5
+plate = Food('plate.png', 490, 620, 330, 98)
+fon = Food("kitchen.jpg", 0, 0, 1280, 720)
+food1 = Food("food1.png", a,  random.randint(-1280,0), 64, 64)
+food2 = Food("food2.png", 2*a, random.randint(-1280,0), 64, 64)
+food3 = Food("food3.png", 3*a, random.randint(-1280,0), 64, 64)
+food4 = Food("food4.png", 4*a, random.randint(-1280,0), 64, 64)
+food5 = Food("food5.png",4*a , random.randint(-1280,0), 64, 64)
+food_list = [food1, food2, food3, food4, food5]
+while True:  # игрововй таймер
+    clock.tick(40)  # частота обновления таймераааааа
+    fon.draw_image()
+    if len(food_list) == 0:
+        speed=0
+        screen.blit(text,(50,50))
+
+    for i in food_list:
+        i.draw_image()
+        i.move_food()
+        i.collide_food(plate)
+    plate.draw_image()
+    plate.move_plate(speed)
+
+    for event in pygame.event.get():  # проходимся по событиям
+        if event.type == pygame.QUIT:  # если нажали на крестик
+            pygame.QUIT()  # выйти из ГОЙДА
+
+    pygame.display.update()  # ОБНОВЛЕНИЕ ДИСПЛЕЯ
